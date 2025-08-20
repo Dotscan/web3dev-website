@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web3Dev | Empowering the Next Generation of Blockchain Developers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1a1a2e;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(230, 0, 122, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #1a1a2e;
+            font-size: 28px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            position: relative;
+        }
+
+        .logo-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, #E6007A, #552BBF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-menu a {
+            color: rgba(26, 26, 46, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #E6007A;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(135deg, #E6007A, #552BBF);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* 主要内容区域 */
+        main {
+            margin-top: 80px;
+        }
+
+        /* 首页横幅 */
+        .hero {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%),
+                        radial-gradient(ellipse at top, rgba(230, 0, 122, 0.1) 0%, rgba(85, 43, 191, 0.05) 50%, transparent 70%);
+            padding: 120px 0 160px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(230,0,122,0.08)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>') repeat;
+            opacity: 0.6;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 30px;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #1a1a2e 0%, #E6007A 50%, #552BBF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.2s forwards;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: rgba(26, 26, 46, 0.8);
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.4s forwards;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            margin-bottom: 50px;
+            color: rgba(26, 26, 46, 0.7);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.6s forwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease 0.8s forwards;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #E6007A, #552BBF);
+            color: white;
+            padding: 18px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(230, 0, 122, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid rgba(230, 0, 122, 0.3);
+            color: #E6007A;
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(230, 0, 122, 0.1);
+            border-color: #E6007A;
+        }
+
+        /* 统计数据 */
+        .stats {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(230, 0, 122, 0.1);
+            border-bottom: 1px solid rgba(230, 0, 122, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #E6007A, #552BBF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            color: rgba(26, 26, 46, 0.7);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* 区块样式 */
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #E6007A 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: rgba(26, 26, 46, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* 服务卡片 */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(230, 0, 122, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #E6007A, #552BBF);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(230, 0, 122, 0.3);
+            box-shadow: 0 30px 60px rgba(230, 0, 122, 0.15);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #E6007A, #552BBF);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1a1a2e;
+        }
+
+        .service-card p {
+            color: rgba(26, 26, 46, 0.7);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* 关于我们 */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: rgba(26, 26, 46, 0.8);
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, rgba(230, 0, 122, 0.2), rgba(85, 43, 191, 0.2));
+            height: 500px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="80" cy="20" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="20" cy="80" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="80" cy="80" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.3)"/></svg>') repeat;
+        }
+
+        /* 团队成员 */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(230, 0, 122, 0.1);
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            border-color: rgba(230, 0, 122, 0.3);
+        }
+
+        .member-photo {
+            height: 300px;
+            background: linear-gradient(45deg, rgba(230, 0, 122, 0.3), rgba(85, 43, 191, 0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        .member-info {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .member-info h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1a1a2e;
+        }
+
+        .member-info p {
+            color: rgba(26, 26, 46, 0.7);
+            line-height: 1.5;
+        }
+
+        /* 联系我们 */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(230, 0, 122, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #E6007A, #552BBF);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 20px;
+            font-size: 1.5rem;
+        }
+
+        .contact-details {
+            color: rgba(26, 26, 46, 0.8);
+        }
+
+        .contact-details strong {
+            color: #1a1a2e;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(230, 0, 122, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1a1a2e;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(230, 0, 122, 0.2);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: #1a1a2e;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #E6007A;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 0 3px rgba(230, 0, 122, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(26, 26, 46, 0.5);
+        }
+
+        .form-group select option {
+            background: white;
+            color: #1a1a2e;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #E6007A, #552BBF);
+            color: white;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(230, 0, 122, 0.4);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: rgba(26, 26, 46, 0.7);
+            text-align: center;
+            padding: 60px 0 40px;
+            border-top: 1px solid rgba(230, 0, 122, 0.1);
+        }
+
+        .footer-content {
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(26, 26, 46, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #E6007A;
+        }
+
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 24px;
+            }
+            
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+            }
+            .nav-menu {
+                gap: 20px;
+            }
+
+            .nav-menu a {
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 80px 0 120px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .services-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+
+            .service-card,
+            .contact-info,
+            .contact-form {
+                padding: 30px;
+            }
+
+            .section {
+                padding: 60px 0;
+            }
+
+            .footer-links {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- 外圈 - 代表Web3生态 -->
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="url(#gradient1)" stroke-width="3" opacity="0.6"/>
+                            
+                            <!-- 中心立方体 - 代表区块链 -->
+                            <g transform="translate(50,50)">
+                                <!-- 立方体前面 -->
+                                <path d="M-12,-8 L12,-8 L12,12 L-12,12 Z" fill="url(#gradient2)" opacity="0.9"/>
+                                <!-- 立方体右面 -->
+                                <path d="M12,-8 L20,-16 L20,4 L12,12 Z" fill="url(#gradient3)" opacity="0.7"/>
+                                <!-- 立方体顶面 -->
+                                <path d="M-12,-8 L-4,-16 L20,-16 L12,-8 Z" fill="url(#gradient4)" opacity="0.8"/>
+                            </g>
+                            
+                            <!-- 连接点 - 代表开发者网络 -->
+                            <circle cx="25" cy="25" r="3" fill="#E6007A" opacity="0.8">
+                                <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="75" cy="25" r="3" fill="#552BBF" opacity="0.8">
+                                <animate attributeName="opacity" values="1;0.8;1" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="25" cy="75" r="3" fill="#7B46C7" opacity="0.8">
+                                <animate attributeName="opacity" values="0.8;1;0.8" dur="2.5s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="75" cy="75" r="3" fill="#E6007A" opacity="0.8">
+                                <animate attributeName="opacity" values="1;0.8;1" dur="1.8s" repeatCount="indefinite"/>
+                            </circle>
+                            
+                            <!-- 连接线 - 代表协作网络 -->
+                            <line x1="25" y1="25" x2="50" y2="42" stroke="url(#gradient5)" stroke-width="1.5" opacity="0.4"/>
+                            <line x1="75" y1="25" x2="50" y2="42" stroke="url(#gradient5)" stroke-width="1.5" opacity="0.4"/>
+                            <line x1="25" y1="75" x2="50" y2="58" stroke="url(#gradient5)" stroke-width="1.5" opacity="0.4"/>
+                            <line x1="75" y1="75" x2="50" y2="58" stroke="url(#gradient5)" stroke-width="1.5" opacity="0.4"/>
+                            
+                            <!-- 渐变定义 -->
+                            <defs>
+                                <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#E6007A;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#552BBF;stop-opacity:1" />
+                                </linearGradient>
+                                <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#E6007A;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#552BBF;stop-opacity:1" />
+                                </linearGradient>
+                                <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#552BBF;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#7B46C7;stop-opacity:1" />
+                                </linearGradient>
+                                <linearGradient id="gradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#E6007A;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#7B46C7;stop-opacity:1" />
+                                </linearGradient>
+                                <linearGradient id="gradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#E6007A;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#552BBF;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <span class="logo-text">Web3Dev</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- 首页横幅 -->
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Defy What's Possible</h1>
+                    <div class="subtitle">Empowering the Next Generation of Web3 Developers</div>
+                    <p>Web3Dev unites the world's most innovative developers and changemakers, building and using the most transformative applications and blockchain technologies. We're dedicated to lowering the barriers to Web3 development, enabling every developer to participate in building the decentralized future.</p>
+                    <div class="cta-buttons">
+                        <a href="#contact" class="cta-button">Join Developer Community →</a>
+                        <a href="#services" class="cta-button secondary">Explore Our Services</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 统计数据 -->
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>90+</h3>
+                        <p>Developers Engaged</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>20+</h3>
+                        <p>Open Source Projects Researched</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>3</h3>
+                        <p>Projects Incubated</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>Community Support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 服务板块 -->
+        <section id="services" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Mission</h2>
+                    <p class="section-subtitle">Through innovative education, tools, and community support, we provide developers with everything they need to thrive in the Web3 ecosystem</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🎓</div>
+                        <h3>Developer Education</h3>
+                        <p>Complete learning pathways from beginner to expert level, covering smart contracts, DeFi, NFTs, and cutting-edge technology stacks to help developers master core Web3 skills.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🛠️</div>
+                        <h3>Development Tools Ecosystem</h3>
+                        <p>Powerful open-source toolchains, SDKs, and APIs that streamline the development process, allowing developers to focus on innovation rather than repetitive tasks.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">👥</div>
+                        <h3>Global Developer Community</h3>
+                        <p>Connect with the world's most active Web3 developer network, fostering knowledge sharing, project collaboration, and technological innovation.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">💡</div>
+                        <h3>Project Incubation & Acceleration</h3>
+                        <p>Comprehensive support for promising Web3 projects from concept to launch, including technical guidance, resource connections, and ecosystem empowerment.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🔧</div>
+                        <h3>Technical Consulting Services</h3>
+                        <p>Expert team providing professional consulting on architecture design, technology selection, performance optimization, and more to ensure successful project delivery.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🚀</div>
+                        <h3>Career Development Pathway</h3>
+                        <p>Complete career guidance and job opportunity recommendations to help developers achieve career breakthroughs in the Web3 field.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我们 -->
+        <section id="about" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">About Web3Dev</h2>
+                    <p class="section-subtitle">We are the most open, collaborative, passionate group of free thinkers, boundary pushers, creators, builders, innovators, and dreamers</p>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Founded in 2020, Web3Dev is the world's leading blockchain developer support platform. We believe that developers are the core force driving the Web3 revolution, and we are committed to providing developers with the highest quality educational resources, development tools, and community support.</p>
+                        
+                        <p>Our vision is to create a borderless developer ecosystem where global innovators can collaborate freely to build the decentralized future together. By lowering technical barriers, providing learning resources, and building community platforms, we are shaping the developer culture of the Web3 era.</p>
+                        
+                        <p>Share your ideas, projects, and vision for an open web. We are a passionate community, eager to meet you and push this industry forward together.</p>
+                    </div>
+                    <div class="about-image">
+                        🌐
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 团队介绍 -->
+        <section id="team" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Core Team</h2>
+                    <p class="section-subtitle">Our team consists of Web3 experts from around the globe, dedicated to providing the best support and services to the developer community</p>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-photo">👨‍💼</div>
+                        <div class="member-info">
+                            <h4>Mason</h4>
+                            <p>Founder<br>Web3 Evangelist, Developer Community Expert</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">👩‍💻</div>
+                        <div class="member-info">
+                            <h4>Carmen</h4>
+                            <p>Co-Founder<br>Open Source Maintainer, Technical Training Expert</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">👨‍🔬</div>
+                        <div class="member-info">
+                            <h4>Alex Chen</h4>
+                            <p>Tech Lead<br>Smart Contract Expert, Blockchain Architect</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">👩‍🎨</div>
+                        <div class="member-info">
+                            <h4>Sarah Kim</h4>
+                            <p>Design Director<br>UX/UI Expert, Product Design Lead</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系我们 -->
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <p class="section-subtitle">Ready to join the Web3 revolution? Connect with us and start your blockchain development journey</p>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3 style="margin-bottom: 30px; color: #1a1a2e;">Contact Information</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-details">
+                                <strong>Email</strong>
+                                i@web3.dev
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">💬</div>
+                            <div class="contact-details">
+                                <strong>Discord</strong>
+                                discord.gg/web3dev
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🐦</div>
+                            <div class="contact-details">
+                                <strong>Twitter</strong>
+                                @tiedyedmt
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-details">
+                                <strong>Location</strong>
+                                Global, Decentralized
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <h3 style="margin-bottom: 30px; color: #1a1a2e;">Send Us a Message</h3>
+                        <form onsubmit="event.preventDefault(); alert('Thank you for your message! We will get back to you soon.');">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="">Select a topic</option>
+                                    <option value="developer">Developer Resources</option>
+                                    <option value="partnership">Partnership</option>
+                                    <option value="incubation">Project Incubation</option>
+                                    <option value="consulting">Technical Consulting</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" placeholder="Tell us about your project or inquiry..." required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#services">Services</a>
+                    <a href="#about">About</a>
+                    <a href="#team">Team</a>
+                    <a href="#contact">Contact</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+                <p style="margin-top: 30px;">© 2024 Web3Dev. Engaging in Building the Future of Decentralized Development.</p>
+                <p style="margin-top: 10px; font-size: 0.9rem;">Empowering developers worldwide to create the next generation of blockchain applications.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.05)';
+            }
+        });
+
+        // 统计数字动画
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start) + obj.dataset.suffix;
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // 当统计区域进入视口时触发动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statItems = entry.target.querySelectorAll('.stat-item h3');
+                    statItems.forEach(item => {
+                        const text = item.innerText;
+                        const number = parseInt(text.replace(/\D/g, ''));
+                        const suffix = text.replace(/[0-9]/g, '');
+                        item.dataset.suffix = suffix;
+                        animateValue(item, 0, number, 2000);
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            observer.observe(statsSection);
+        }
+    </script>
+</body>
+</html>
